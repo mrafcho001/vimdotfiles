@@ -73,9 +73,6 @@ nnoremap <leader>k   :cp<CR>
 " go to next quick fix item
 nnoremap <leader>j   :cn<CR>
 
-" Reload file and go to end, useful for reading logs that are updating
-nnoremap <leader>r   :e \| normal G<CR>
-
 " make yanking consistent with other commands
 nnoremap Y y$
 
@@ -222,16 +219,10 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 map <silent> <leader>n :noh<cr>
 
 " Smart way to move between windows
-nmap <C-j> <C-W>j
-nmap <C-k> <C-W>k
-nmap <C-h> <C-W>h
-nmap <C-l> <C-W>l
-
-" Close window more easily
-nmap <C-q> :close<CR>
-
-" Position QuickFix window on bottom across all windows
-autocmd FileType qf wincmd J
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>
@@ -440,30 +431,34 @@ endfunction
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/vimfiles/bundle/vundle/
-call vundle#rc()
+if has('vim_starting')
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+call neobundle#end()
 
 " My Bundles here:
 "
 " original repos on github
-Bundle 'scrooloose/nerdtree'
-Bundle 'kien/ctrlp.vim'
-Bundle 'FuzzyFinder'
-Bundle 'bling/vim-airline'
-Bundle 'AndrewRadev/linediff.vim'
-Bundle 'mbbill/undotree'
-Bundle 'sk1418/QFGrep'
-Bundle 'Shougo/neocomplete.vim'
-Bundle 'FelikZ/ctrlp-py-matcher'
-Bundle 'ironhouzi/vim-stim'
-Bundle 'Shougo/unite.vim'
-Bundle 'vasconcelloslf/vim-interestingwords'
-Bundle 'rking/ag.vim'
-Bundle 'milkypostman/vim-togglelist'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'FuzzyFinder'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'AndrewRadev/linediff.vim'
+NeoBundle 'mbbill/undotree'
+NeoBundle 'sk1418/QFGrep'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'FelikZ/ctrlp-py-matcher'
+NeoBundle 'ironhouzi/vim-stim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'vasconcelloslf/vim-interestingwords'
+NeoBundle 'rking/ag.vim'
+
 " Bundle 'Valloric/YouCompleteMe'
 " Bundle 'altercation/vim-colors-solarized'
 " Bundle 'jlanzarotta/bufexplorer'
@@ -479,10 +474,12 @@ Bundle 'milkypostman/vim-togglelist'
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
-Bundle 'L9'
+NeoBundle 'L9'
 
 
 filetype plugin indent on     " required!
+
+NeoBundleCheck
 
 " Plugin stuff
 nmap <F2> :NERDTreeToggle<CR>
