@@ -73,6 +73,9 @@ nnoremap <leader>k   :cp<CR>
 " go to next quick fix item
 nnoremap <leader>j   :cn<CR>
 
+" Reload file and go to end, useful for reading logs that are updating
+nnoremap <leader>r   :e \| normal G<CR>
+
 " make yanking consistent with other commands
 nnoremap Y y$
 
@@ -219,10 +222,16 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 map <silent> <leader>n :noh<cr>
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+nmap <C-j> <C-W>j
+nmap <C-k> <C-W>k
+nmap <C-h> <C-W>h
+nmap <C-l> <C-W>l
+
+" Close window more easily
+nmap <C-q> :close<CR>
+
+" Position QuickFix window on bottom across all windows
+autocmd FileType qf wincmd J
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>
