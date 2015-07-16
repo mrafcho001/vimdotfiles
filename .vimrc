@@ -68,10 +68,10 @@ nmap <leader>w :w!<cr>
 nnoremap <leader>p   "_diwP
 " grep for under under the cursor in the current file
 nnoremap <leader>f   vimgrep <C-R>=expand("<cword>")<CR> %<CR>
-" go to previous quick fix item
-nnoremap <leader>k   :cp<CR>
-" go to next quick fix item
-nnoremap <leader>j   :cn<CR>
+" go to previous quick fix item or  in diffmode previous change
+nnoremap <expr> <leader>k   &diff ? '[c' : ':cp<CR>'
+" go to next quick fix item or in diffmode go to next change
+nnoremap <expr> <leader>j   &diff ? ']c' : ':cn<CR>'
 
 " Reload file and go to end, useful for reading logs that are updating
 nnoremap <leader>r   :e \| normal G<CR>
@@ -81,6 +81,9 @@ nnoremap Y y$
 
 " Enable cscope queries to go into the quickfix window
 :set cscopequickfix=s-
+
+set diffopt+=iwhite
+set diffexpr=DiffW()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -219,7 +222,7 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 " map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
-map <silent> <leader>n :noh<cr>
+map  <leader>n :set nohlsearch<cr>
 
 " Smart way to move between windows
 nmap <C-j> <C-W>j
@@ -437,6 +440,23 @@ function! <SID>BufcloseCloseIt()
    endif
 endfunction
 
+
+" Use -w instead of -b for ignore case, -b (vim default) only ignores trailing space
+function DiffW()
+  let opt = ""
+   if &diffopt =~ "icase"
+     let opt = opt . "-i "
+   endif
+   if &diffopt =~ "iwhite"
+     let opt = opt . "-w " " vim uses -b by default
+   endif
+   silent execute "!diff -a --binary " . opt .
+     \ v:fname_in . " " . v:fname_new .  " > " . v:fname_out
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim Plugin related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible               " be iMproved
 filetype off                   " required!
 
@@ -524,6 +544,8 @@ if executable("ag")
 else
     echo 'Could not find ag, using default ctrlp filename list generator'
 endif
+
+let g:ag_prg="ag --column --nogroup --noheading --smart-case"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Overwrite Plug-in 
