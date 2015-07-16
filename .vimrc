@@ -469,7 +469,6 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-call neobundle#end()
 
 " My Bundles here:
 "
@@ -487,6 +486,8 @@ NeoBundle 'ironhouzi/vim-stim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'vasconcelloslf/vim-interestingwords'
 NeoBundle 'rking/ag.vim'
+NeoBundle 'milkypostman/vim-togglelist'
+NeoBundle 'justinmk/vim-syntax-extra'
 
 " Bundle 'Valloric/YouCompleteMe'
 " Bundle 'altercation/vim-colors-solarized'
@@ -506,6 +507,7 @@ NeoBundle 'rking/ag.vim'
 NeoBundle 'L9'
 
 
+call neobundle#end()
 filetype plugin indent on     " required!
 
 NeoBundleCheck
