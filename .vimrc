@@ -474,8 +474,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "
 " original repos on github
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'FuzzyFinder'
+NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'AndrewRadev/linediff.vim'
 NeoBundle 'mbbill/undotree'
@@ -488,6 +488,10 @@ NeoBundle 'vasconcelloslf/vim-interestingwords'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'milkypostman/vim-togglelist'
 NeoBundle 'justinmk/vim-syntax-extra'
+NeoBundle 'unblevable/quick-scope'
+
+" Now abanadoned and replaced by 'ctrlpvim/ctrlp.vim'
+" NeoBundle 'kien/ctrlp.vim'
 
 " Bundle 'Valloric/YouCompleteMe'
 " Bundle 'altercation/vim-colors-solarized'
