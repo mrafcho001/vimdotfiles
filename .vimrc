@@ -64,10 +64,11 @@ let g:mapleader = " "
 " Fast saving
 nmap <leader>w :w!<cr>
 
-" Replace word with last yank
-nnoremap <leader>p   "_diwP
+" Replace word with last yank or specified register
+nnoremap <expr> <leader>p   '"_ciw<C-r>' . v:register . '<ESC>'
+
 " grep for under under the cursor in the current file
-nnoremap <leader>f   vimgrep <C-R>=expand("<cword>")<CR> %<CR>
+nnoremap <leader>f   :vimgrep <C-R>=expand("<cword>")<CR> %<CR>
 " go to previous quick fix item or  in diffmode previous change
 nnoremap <expr> <leader>k   &diff ? '[c' : ':cp<CR>'
 " go to next quick fix item or in diffmode go to next change
@@ -76,8 +77,29 @@ nnoremap <expr> <leader>j   &diff ? ']c' : ':cn<CR>'
 " Reload file and go to end, useful for reading logs that are updating
 nnoremap <leader>r   :e \| normal G<CR>
 
+" Jump to clipboard (register ") tag
+nnoremap <leader>tj  :tag <C-r>+<CR>
+
 " make yanking consistent with other commands
 nnoremap Y y$
+
+" Jumping to marked column is more useful than just jumping to marked line
+nnoremap ' `
+nnoremap ` '
+
+" Keep visual selection after indentation
+vnoremap > >gv
+vnoremap < <gv
+
+" Joining lines does not move cursor
+nnoremap J mzJ`z
+
+" Make arrow keys do something useful
+nnoremap <left> :vertical resize +2<CR>
+nnoremap <right> :vertical resize -2<CR>
+nnoremap <up> :resize +2<CR>
+nnoremap <down> :resize -2<CR>
+
 
 " Enable cscope queries to go into the quickfix window
 :set cscopequickfix=s-
@@ -194,7 +216,10 @@ set tabstop=4
 
 " Linebreak on 500 characters
 set lbr
-set tw=500
+set breakindent
+let &showbreak = '↳'
+set cpo+=n
+set tw=80
 
 set ai "Auto indent
 set si "Smart indent
@@ -222,7 +247,7 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 " map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
-map  <leader>n :set nohlsearch<cr>
+map  <leader>n :set nohlsearch!<cr>
 
 " Smart way to move between windows
 nmap <C-j> <C-W>j
@@ -293,7 +318,12 @@ nnoremap <silent> <F3> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR>
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap VIM 0 to first non-blank character
-map 0 ^
+nnoremap 0 ^
+nnoremap ^ 0
+
+" Keep accidentally hitting F1 instead of ESC
+map <F1> <ESC>
+inoremap <F1> <ESC>
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
 nmap <M-j> mz:m+<cr>`z
@@ -308,17 +338,17 @@ if has("mac") || has("macunix")
   vmap <D-k> <M-k>
 endif
 
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
-autocmd BufWrite *.c :call DeleteTrailingWS()
-autocmd BufWrite *.cpp :call DeleteTrailingWS()
-autocmd BufWrite *.h :call DeleteTrailingWS()
+" Delete trailing white space on save, causes a lot merge problems, but pretty cool
+" func! DeleteTrailingWS()
+"   exe "normal mz"
+"   %s/\s\+$//ge
+"   exe "normal `z"
+" endfunc
+" autocmd BufWrite *.py :call DeleteTrailingWS()
+" autocmd BufWrite *.coffee :call DeleteTrailingWS()
+" autocmd BufWrite *.c :call DeleteTrailingWS()
+" autocmd BufWrite *.cpp :call DeleteTrailingWS()
+" autocmd BufWrite *.h :call DeleteTrailingWS()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -474,7 +504,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "
 " original repos on github
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'FuzzyFinder'
+" NeoBundle 'FuzzyFinder'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'AndrewRadev/linediff.vim'
@@ -483,7 +513,7 @@ NeoBundle 'sk1418/QFGrep'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'FelikZ/ctrlp-py-matcher'
 NeoBundle 'ironhouzi/vim-stim'
-NeoBundle 'Shougo/unite.vim'
+" NeoBundle 'Shougo/unite.vim'
 NeoBundle 'vasconcelloslf/vim-interestingwords'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'milkypostman/vim-togglelist'
@@ -525,15 +555,19 @@ nnoremap <F5> :UndotreeToggle<cr>
 " nmap <F8> :TagbarToggle<CR>
 " let g:tagbar_usearrows = 1
 
-nmap <C-g> :FufBuffer<CR>
-nmap <C-s> :FufBufferTag<CR>
+nmap <C-g> :CtrlPBuffer<CR>
+nmap <C-s> :CtrlPBufTag<CR>
 
 
 " CtrlP Configs
 let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP :pwd'
+let g:ctrlp_switch_buffer = 0
+
 " let g:ctrlp_regexp = 1
 " let g:ctrlp_root_markers = ['lte', '.p4env', '.ctrlp']
-" let g:ctrlp_use_caching = 1
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 0
 " let g:ctrlp_max_files = 0
 " let g:ctrlp_open_new_file = 'r'
 " let g:ctrlp_custom_ignore = 'build'
