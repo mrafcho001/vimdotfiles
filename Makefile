@@ -1,12 +1,21 @@
 .PHONY : sync_files initial
 
-default: sync_files
+neovim: neovim_sync_files neovim_initial
+
+vim: sync_files initial
 
 #Copy all VIM files
 sync_files:
-	rsync -avh --exclude='Makefile' --exclude='.git' --exclude='README.md' ./ ~/.
+	# Copy VIM files
+	rsync -avh ./vim/ ~/.
 
-#Get neobundle and copy all the files, start vim to install the rest of the plugins
+neovim_sync_files:
+	# Copy NeoVIM files
+	rsync -avh ./neovim/ ~/.config/nvim/
+
+#Get vim-plugged and copy all the files, start (neo)vim to install the rest of the plugins
 initial: sync_files
-	mkdir -p ~/.vim/bundle
-	git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+neovim_initial:
+	curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
