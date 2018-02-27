@@ -79,9 +79,6 @@ set diffexpr=DiffW()
 " Show Line numbers
 set number
 
-" Set maintain 3 lines of visual space around cursor
-set so=3
-
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 
@@ -148,7 +145,7 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
-set foldmethod=syntax
+set foldmethod=indent
 set foldlevel=20
 set nofoldenable
 
@@ -167,6 +164,7 @@ map  <leader>n :set nohlsearch!<cr>
 nmap <C-j> <C-W>j
 nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
+nmap <BS> <C-W>h
 nmap <C-l> <C-W>l
 
 " Close window more easily
