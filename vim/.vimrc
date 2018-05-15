@@ -487,41 +487,26 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim Plugin related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible               " be iMproved
-filetype off                   " required!
+call plug#begin('~/.vim/plugged')
 
-if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-
-" My Bundles here:
+" My packages here:
 "
 " original repos on github
-NeoBundle 'scrooloose/nerdtree'
-" NeoBundle 'FuzzyFinder'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'AndrewRadev/linediff.vim'
-NeoBundle 'mbbill/undotree'
-NeoBundle 'sk1418/QFGrep'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'FelikZ/ctrlp-py-matcher'
-NeoBundle 'ironhouzi/vim-stim'
-" NeoBundle 'Shougo/unite.vim'
-NeoBundle 'vasconcelloslf/vim-interestingwords'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'milkypostman/vim-togglelist'
-NeoBundle 'justinmk/vim-syntax-extra'
-NeoBundle 'unblevable/quick-scope'
+Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'bling/vim-airline'
+Plug 'AndrewRadev/linediff.vim'
+Plug 'mbbill/undotree'
+Plug 'sk1418/QFGrep'
+Plug 'Shougo/neocomplete.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'ironhouzi/vim-stim'
+Plug 'vasconcelloslf/vim-interestingwords'
+Plug 'rking/ag.vim'
+Plug 'milkypostman/vim-togglelist'
+Plug 'justinmk/vim-syntax-extra'
+Plug 'unblevable/quick-scope'
 
-" Now abanadoned and replaced by 'ctrlpvim/ctrlp.vim'
-" NeoBundle 'kien/ctrlp.vim'
 
 " Bundle 'Valloric/YouCompleteMe'
 " Bundle 'altercation/vim-colors-solarized'
@@ -535,16 +520,7 @@ NeoBundle 'unblevable/quick-scope'
 " Bundle 'xolox/vim-easytags'
 " Bundle 'xolox/vim-misc'
 
-
-" Github repos of the user 'vim-scripts'
-" => can omit the username part
-NeoBundle 'L9'
-
-
-call neobundle#end()
-filetype plugin indent on     " required!
-
-NeoBundleCheck
+call plug#end()
 
 " Plugin stuff
 nmap <F2> :NERDTreeToggle<CR>
