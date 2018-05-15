@@ -9,9 +9,8 @@ set clipboard+=unnamedplus
 set mouse=a
 
 " Tell neovim where to find python. Installation & system dependent
-let g:python_host_prog = '/usr2/mbakiev/nvim_venv/nvim2/bin/python'
-let g:python3_host_prog = '/usr2/mbakiev/nvim_venv/nvim3/bin/python'
-
+let g:python_host_prog = '/Users/mrafcho001/Development/neovim-env/py2/bin/python'
+let g:python3_host_prog = '/Users/mrafcho001/Development/neovim-env/py3/bin/python'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
