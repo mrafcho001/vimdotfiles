@@ -142,7 +142,6 @@ let &showbreak = '↳'
 set cpo+=n
 
 set ai "Auto indent
-set si "Smart indent
 set wrap "Wrap lines
 
 set foldmethod=indent
@@ -339,6 +338,7 @@ Plug 'vim-python/python-syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
+Plug 'mhinz/vim-signify'
 
 call plug#end()
 
@@ -364,7 +364,7 @@ let g:ctrlp_cmd = 'CtrlP :pwd'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_custom_ignore = 'build\|BS_ENV\|dist'
+let g:ctrlp_custom_ignore = 'build\|BS_ENV\|dist\|htmlcov\|rpmout\|*.egg-info\|__pycache__'
 
 " CtrlP Py Matches
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
