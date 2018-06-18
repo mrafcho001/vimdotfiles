@@ -338,6 +338,7 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'mhinz/vim-signify'
+Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 
@@ -380,7 +381,8 @@ let g:ag_prg="ag --column --nogroup --noheading --smart-case"
 
 let g:grepper = { 'tools' : ['ag', 'git', 'grep' ], 'open': 1, 'jump': 0, 'switch': 0, 'next_tool': '<leader>g' }
 
-" Ale configuration
+" Python Related
+" Ale: configuration
 let g:ale_linters = {
 \ 'python': ['flake8']
 \ }
@@ -388,8 +390,20 @@ let g:ale_linters = {
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 
+" python-syntax: highlighting
 let g:python_highlight_all = 1
 
+" deoplete: completitino
+call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+" Close the preview window
+autocmd CompleteDone * silent! pclose!
+
+" vim-jedi: disable completion (deoplete-jedi already does that)
+" let g:jedi#completions_enabled = 0
+" autocmd FileType python setlocal completeopt-=preview
+" let g:jedi#goto_command = "<c-]>"
+" let g:jedi#usages_command = "<c-\\>"
+" let g:jedi#rename_command = "<leader>R"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Overwrite Plug-in 
@@ -422,15 +436,16 @@ vnoremap <expr> <silent> F Quick_scope_selective('F')
 vnoremap <expr> <silent> t Quick_scope_selective('t')
 vnoremap <expr> <silent> T Quick_scope_selective('T')
 
+" vim-nterestingwords: use 'h/H' instead of k
+let g:interestingWordsRandomiseColors = 1
+let g:interestingWordsDefaultMappings = 0
+nnoremap <silent> <leader>h :call InterestingWords('n')<cr>
+nnoremap <silent> <leader>H :call UncolorAllWords()<cr>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Filename related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <leader>cs :let @*=expand("%:p")<CR>
-
-let g:deoplete#sources#jedi#python_path = '/usr2/mbakiev/nr/super/nr-pcs/.tox/py36/bin/python'
-call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
-
-autocmd CompleteDone * silent! pclose!
 
 
 " Has the file changed outside of NVIM?
